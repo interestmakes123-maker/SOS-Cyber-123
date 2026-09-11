@@ -15,6 +15,202 @@
 
     <style>
         /* =========================
+   GET HELP NOW MODAL
+========================= */
+
+        .help-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+        }
+
+        .help-window {
+            width: 100%;
+            max-width: 720px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .help-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .help-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .help-main-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(239, 68, 68, 0.15);
+            font-size: 28px;
+        }
+
+        .help-label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #f87171;
+            font-weight: 700;
+        }
+
+        .help-header h2 {
+            margin: 4px 0;
+            color: white;
+            font-size: 28px;
+        }
+
+        .help-header p {
+            margin: 0;
+            color: #9ca3af;
+        }
+
+        .help-options {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .help-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .help-card-icon {
+            font-size: 28px;
+            width: 45px;
+            text-align: center;
+        }
+
+        .help-card-content {
+            flex: 1;
+        }
+
+        .help-card-label {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: #9ca3af;
+            font-weight: 700;
+        }
+
+        .help-card-content h3 {
+            margin: 4px 0;
+            color: white;
+            font-size: 21px;
+        }
+
+        .help-card-content p {
+            margin: 0;
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        .help-action {
+            text-decoration: none;
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .help-safety {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 14px;
+            background: rgba(34, 197, 94, 0.08);
+            border: 1px solid rgba(34, 197, 94, 0.15);
+        }
+
+        .help-safety-icon {
+            font-size: 25px;
+        }
+
+        .help-safety strong {
+            color: white;
+        }
+
+        .help-safety p {
+            margin: 4px 0 0;
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        .help-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 22px;
+            color: #6b7280;
+            font-size: 11px;
+        }
+
+        .help-footer button {
+            border: none;
+            background: transparent;
+            color: #9ca3af;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        @media (max-width: 600px) {
+            .help-window {
+                padding: 20px;
+            }
+
+            .help-card {
+                flex-wrap: wrap;
+            }
+
+            .help-action {
+                width: 100%;
+                text-align: center;
+            }
+
+            .help-header h2 {
+                font-size: 23px;
+            }
+        }
+
+        /* =========================
            BASIC SETTINGS
         ========================== */
 
@@ -1782,7 +1978,58 @@
                 padding: 10px;
             }
         }
+
+        <style>.analyzer-section {
+            min-height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+            background: #f7f9fc;
+        }
+
+        .analyzer-container {
+            width: 100%;
+            max-width: 850px;
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.10);
+            text-align: center;
+        }
+
+        .analyzer-container h2 {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .analyzer-container p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        #scam-message {
+            width: 100%;
+            min-height: 180px;
+            padding: 18px;
+            border: 1px solid #ddd;
+            border-radius: 14px;
+            font-size: 16px;
+            resize: vertical;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        .analyzer-container button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
     </style>
+
 </head>
 
 
@@ -1829,12 +2076,13 @@
                 </a>
 
             </nav>
+            <button onclick="window.location.href='/skills'">
+                👩‍💻 BUILD MY CYBER SKILLS
+            </button>
 
-
-            <a href="#emergency" class="nav-help">
+            <button class="nav-help" onclick="showHelpNow()">
                 🚨 Get Help Now
-            </a>
-
+            </button>
 
             <button class="menu-btn" id="menuBtn">
                 ☰
@@ -1936,44 +2184,44 @@
                         </div>
 
 
-                        <div class="trust-item">
-
-                            <div class="trust-icon purple">
-                                🛡️
-                            </div>
-
-                            <div>
-
-                                <strong>
-                                    Guided Protection
-                                </strong>
-
-                                <span>
-                                    Step-by-step help
-                                </span>
-
-                            </div>
+                        <div class="trust-item" onclick="openEvidenceVault()" style="cursor: pointer;">
 
                         </div>
 
+                        <div class="trust-icon purple">
+                            🛡️
+                        </div>
 
-                        <div class="trust-item">
+                        <div>
 
-                            <div class="trust-icon orange">
-                                📋
-                            </div>
+                            <strong>
+                                Guided Protection
+                            </strong>
 
-                            <div>
+                            <span>
+                                Step-by-step help
+                            </span>
 
-                                <strong>
-                                    Evidence Ready
-                                </strong>
+                        </div>
 
-                                <span>
-                                    Keep important proof
-                                </span>
+                    </div>
 
-                            </div>
+
+                    <div class="trust-item">
+
+                        <div class="trust-icon orange">
+                            📋
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Evidence Ready
+                            </strong>
+
+                            <span>
+                                Keep important proof
+                            </span>
 
                         </div>
 
@@ -1981,178 +2229,180 @@
 
                 </div>
 
+            </div>
 
 
-                <!-- HERO VISUAL -->
 
-                <div class="hero-visual">
+            <!-- HERO VISUAL -->
 
-                    <div class="glow glow-one"></div>
+            <div class="hero-visual">
 
-                    <div class="glow glow-two"></div>
+                <div class="glow glow-one"></div>
 
-                    <div class="cyber-orbit orbit-one"></div>
+                <div class="glow glow-two"></div>
 
-                    <div class="cyber-orbit orbit-two"></div>
+                <div class="cyber-orbit orbit-one"></div>
+
+                <div class="cyber-orbit orbit-two"></div>
 
 
-                    <!-- SHIELD -->
+                <!-- SHIELD -->
 
-                    <div class="main-shield">
+                <div class="main-shield">
 
-                        <div class="shield-inner">
+                    <div class="shield-inner">
 
-                            🛡️
+                        🛡️
 
-                            <div class="shield-lock">
-                                🔒
-                            </div>
-
+                        <div class="shield-lock">
+                            🔒
                         </div>
 
                     </div>
 
-
-                    <!-- PHONE -->
-
-                    <div class="phone">
-
-                        <div class="phone-top"></div>
-
-                        <div class="phone-screen">
+                </div>
 
 
-                            <div class="phone-header">
+                <!-- PHONE -->
 
-                                🛡️ SOS Cyber
+                <div class="phone">
+
+                    <div class="phone-top"></div>
+
+                    <div class="phone-screen">
+
+
+                        <div class="phone-header">
+
+                            🛡️ SOS Cyber
+
+                        </div>
+
+
+                        <div class="warning-card">
+
+                            <div class="warning-symbol">
+                                ⚠️
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Suspicious Link
+                                </strong>
+
+                                <small>
+                                    Threat detected
+                                </small>
 
                             </div>
 
+                        </div>
 
-                            <div class="warning-card">
 
-                                <div class="warning-symbol">
-                                    ⚠️
-                                </div>
+                        <div class="safe-card">
 
-                                <div>
+                            <i>
+                                ✓
+                            </i>
 
-                                    <strong>
-                                        Suspicious Link
-                                    </strong>
+                            <div>
 
-                                    <small>
-                                        Threat detected
-                                    </small>
+                                <strong>
+                                    Payment Protected
+                                </strong>
 
-                                </div>
+                                <small>
+                                    Secure connection
+                                </small>
 
                             </div>
 
-
-                            <div class="safe-card">
-
-                                <i>
-                                    ✓
-                                </i>
-
-                                <div>
-
-                                    <strong>
-                                        Payment Protected
-                                    </strong>
-
-                                    <small>
-                                        Secure connection
-                                    </small>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="phone-line"></div>
-
-                            <div class="phone-line short"></div>
-
-
                         </div>
+
+
+                        <div class="phone-line"></div>
+
+                        <div class="phone-line short"></div>
+
 
                     </div>
 
+                </div>
 
-                    <!-- FLOATING ALERT -->
 
-                    <div class="floating-card alert-card">
+                <!-- FLOATING ALERT -->
 
-                        <div class="floating-icon red">
-                            ⚠️
-                        </div>
+                <div class="floating-card alert-card">
 
-                        <div>
-
-                            <strong>
-                                SCAM ALERT
-                            </strong>
-
-                            <span>
-                                Suspicious activity
-                            </span>
-
-                        </div>
-
+                    <div class="floating-icon red">
+                        ⚠️
                     </div>
 
+                    <div>
 
-                    <!-- UPI CARD -->
-
-                    <div class="floating-card upi-card">
-
-                        <div class="floating-icon cyan">
-                            ₹
-                        </div>
-
-                        <div>
-
-                            <strong>
-                                UPI PROTECTED
-                            </strong>
-
-                            <span>
-                                Payment safety
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- LINK CARD -->
-
-                    <div class="floating-card link-card">
-
-                        🔗
+                        <strong>
+                            SCAM ALERT
+                        </strong>
 
                         <span>
-                            Threat Blocked
+                            Suspicious activity
                         </span>
 
                     </div>
 
+                </div>
 
-                    <div class="mini-icon mini-one">
-                        🔐
+
+                <!-- UPI CARD -->
+
+                <div class="floating-card upi-card">
+
+                    <div class="floating-icon cyan">
+                        ₹
                     </div>
 
-                    <div class="mini-icon mini-two">
-                        🔑
-                    </div>
+                    <div>
 
-                    <div class="mini-icon mini-three">
-                        🔒
+                        <strong>
+                            UPI PROTECTED
+                        </strong>
+
+                        <span>
+                            Payment safety
+                        </span>
+
                     </div>
 
                 </div>
+
+
+                <!-- LINK CARD -->
+
+                <div class="floating-card link-card">
+
+                    🔗
+
+                    <span>
+                        Threat Blocked
+                    </span>
+
+                </div>
+
+
+                <div class="mini-icon mini-one">
+                    🔐
+                </div>
+
+                <div class="mini-icon mini-two">
+                    🔑
+                </div>
+
+                <div class="mini-icon mini-three">
+                    🔒
+                </div>
+
+            </div>
 
             </div>
 
@@ -2468,6 +2718,7 @@
                     🚨 START EMERGENCY RESPONSE →
 
                 </button>
+                <div id="emergency-plan" style="display: none; margin-top: 25px;"></div>
 
 
             </div>
@@ -2721,15 +2972,14 @@
                     Protection
                 </h4>
 
-                <a href="#">
+                <a href="/analyzer">
                     AI Scam Analyzer
                 </a>
 
-                <a href="#">
+                <a href="/evidence">
                     Evidence Vault
                 </a>
-
-                <a href="#">
+                <a href="/timeline">
                     Incident Timeline
                 </a>
 
@@ -2782,8 +3032,179 @@
 
 
     <!-- =========================
-         TOAST MESSAGE
-    ========================== -->
+     GET HELP NOW MODAL
+========================= -->
+
+    <div class="help-modal" id="helpModal">
+
+        <div class="help-window">
+
+            <button class="help-close" onclick="closeHelpNow()">
+                ✕
+            </button>
+
+            <div class="help-header">
+
+                <div class="help-main-icon">
+                    🚨
+                </div>
+
+                <div>
+                    <div class="help-label">
+                        CYBER EMERGENCY CENTER
+                    </div>
+
+                    <h2>
+                        Get Help Now
+                    </h2>
+
+                    <p>
+                        You’ve taken the first step. Now choose the right
+                        support and act immediately.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="help-options">
+
+
+                <div class="help-card">
+
+                    <div class="help-card-icon">
+                        📞
+                    </div>
+
+                    <div class="help-card-content">
+
+                        <span class="help-card-label">
+                            CYBER CRIME HELPLINE
+                        </span>
+
+                        <h3>
+                            1930
+                        </h3>
+
+                        <p>
+                            Report cyber financial fraud immediately.
+                        </p>
+
+                    </div>
+
+                    <a href="tel:1930" class="help-action">
+                        CALL →
+                    </a>
+
+                </div>
+
+
+                <div class="help-card">
+
+                    <div class="help-card-icon">
+                        🚔
+                    </div>
+
+                    <div class="help-card-content">
+
+                        <span class="help-card-label">
+                            POLICE EMERGENCY
+                        </span>
+
+                        <h3>
+                            112
+                        </h3>
+
+                        <p>
+                            Get immediate police emergency assistance.
+                        </p>
+
+                    </div>
+
+                    <a href="tel:112" class="help-action">
+                        CALL →
+                    </a>
+
+                </div>
+
+
+                <div class="help-card">
+
+                    <div class="help-card-icon">
+                        🌐
+                    </div>
+
+                    <div class="help-card-content">
+
+                        <span class="help-card-label">
+                            OFFICIAL REPORTING
+                        </span>
+
+                        <h3>
+                            Cyber Crime Portal
+                        </h3>
+
+                        <p>
+                            Report your cybercrime through the official
+                            Government portal.
+                        </p>
+
+                    </div>
+
+                    <a href="https://www.cybercrime.gov.in/" target="_blank" class="help-action">
+                        REPORT →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="help-safety">
+
+                <div class="help-safety-icon">
+                    🛡️
+                </div>
+
+                <div>
+
+                    <strong>
+                        Preserve your evidence
+                    </strong>
+
+                    <p>
+                        Keep screenshots, suspicious messages,
+                        transaction IDs and other proof safe.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="help-footer">
+
+                <span>
+                    SOS CYBER • Emergency Response Platform
+                </span>
+
+                <button onclick="closeHelpNow()">
+                    CLOSE
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+     TOAST MESSAGE
+========================= -->
+
+
+
 
     <div class="toast" id="toast">
 
@@ -2882,23 +3303,196 @@
 
         /* EMERGENCY BUTTON */
 
-        function startEmergency() {
+        async function startEmergency() {
+
+            if (!selectedScamType) {
+                showToast(
+                    "Select Scam Type",
+                    "Please select your scam type first."
+                );
+                return;
+            }
 
             showToast(
                 "Emergency Mode Activated",
-                "Opening emergency response..."
+                "Getting your emergency action plan..."
             );
 
-            /*
-                Later Flask connection:
+            try {
 
-                window.location.href = "/emergency";
-            */
+                const response = await fetch(
+                    "/api/emergency/" +
+                    encodeURIComponent(selectedScamType)
+                );
 
+                const data = await response.json();
+
+                if (!response.ok) {
+                    showToast(
+                        "Error",
+                        data.error || "Action plan not found."
+                    );
+                    return;
+                }
+                if (!response.ok) {
+                    showToast(
+                        "Error",
+                        data.error || "Action plan not found."
+                    );
+                    return;
+                }
+
+                const reportId = localStorage.getItem("report_id");
+
+                if (reportId) {
+
+                    await fetch(
+                        "/api/emergency-response/" + reportId,
+                        {
+                            method: "POST"
+                        }
+                    );
+
+                }
+
+                let riskColor = "#2e7d32";
+                let riskBackground = "#e8f5e9";
+
+                if (data.risk_level === "HIGH") {
+                    riskColor = "#d32f2f";
+                    riskBackground = "#ffebee";
+                } else if (data.risk_level === "MEDIUM") {
+                    riskColor = "#f9a825";
+                    riskBackground = "#fff8e1";
+                }
+
+                const planBox =
+                    document.getElementById("emergency-plan");
+
+                planBox.style.display = "block";
+
+                planBox.innerHTML = `
+
+            <div style="
+                background: white;
+                border: 1px solid #ffd6d6;
+                border-radius: 18px;
+                padding: 24px;
+                margin-top: 20px;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            ">
+
+                <div style="
+                    font-size: 14px;
+                    font-weight: 700;
+                    color: #e63946;
+                    margin-bottom: 8px;
+                ">
+                    🚨 EMERGENCY ACTION PLAN
+                </div>
+
+                <div style="
+                    display: inline-block;
+                    margin: 8px 0 15px;
+                    padding: 8px 14px;
+                    border-radius: 20px;
+                    background: ${riskBackground};
+                    color: ${riskColor};
+                    font-weight: 700;
+                    font-size: 13px;
+                ">
+                    ${data.risk_level} RISK
+                </div>
+
+                <h3 style="
+                    margin: 0 0 18px;
+                    font-size: 22px;
+                ">
+                    ${data.scam_type}
+                </h3>
+
+                ${data.action_plan.map((step, index) => `
+                    <div style="
+                        display: flex;
+                        gap: 12px;
+                        align-items: flex-start;
+                        padding: 12px 0;
+                        border-bottom: 1px solid #eeeeee;
+                    ">
+
+                        <span style="
+                            min-width: 28px;
+                            height: 28px;
+                            border-radius: 50%;
+                            background: #fff0f1;
+                            color: #e63946;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-weight: 700;
+                        ">
+                            ${index + 1}
+                        </span>
+
+                        <span style="
+                            line-height: 1.5;
+                            color: #333;
+                        ">
+                            ${step}
+                        </span>
+
+                    </div>
+                `).join("")}
+
+                <button
+                    onclick="openEvidenceVault()"
+                    style="
+                        margin-top: 20px;
+                        width: 100%;
+                        padding: 14px;
+                        border: none;
+                        border-radius: 12px;
+                        background: #e63946;
+                        color: white;
+                        font-size: 16px;
+                        font-weight: 700;
+                        cursor: pointer;
+                    "
+                >
+                    🗂️ Open Evidence Vault →
+                </button>
+
+            </div>
+        `;
+
+            } catch (error) {
+
+                console.error(error);
+
+                showToast(
+                    "Connection Error",
+                    "Cannot connect to the backend."
+                );
+            }
         }
 
 
+        function openEvidenceVault() {
 
+            const reportId =
+                localStorage.getItem("report_id");
+
+            if (!reportId) {
+                showToast(
+                    "Report ID Missing",
+                    "Please select a scam type first."
+                );
+                return;
+            }
+
+            window.location.href =
+                "/evidence?report_id=" + reportId;
+        }
         /* SCAM ANALYZER BUTTON */
 
         function checkScam() {
@@ -2920,26 +3514,80 @@
 
 
         /* SCAM CATEGORY */
+        let selectedScamType = " ";
 
-        function selectScam(type) {
+        async function selectScam(type) {
+            selectedScamType = type;
 
             showToast(
                 type,
-                "Preparing your personalized response..."
+                "Saving scam type..."
             );
 
-            /*
-                Later Flask connection:
+            try {
 
-                window.location.href =
-                    "/scam-selection?type="
-                    + encodeURIComponent(type);
-            */
+                const response = await fetch("/api/report", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        scam_type: type,
+                        description: ""
+                    })
+                });
 
+                const data = await response.json();
+
+                if (response.ok) {
+
+                    // Save the report ID for later steps
+                    localStorage.setItem(
+                        "report_id",
+                        data.report_id
+                    );
+                    localStorage.setItem("selected_scam_type", type);
+
+                    showToast(
+                        "Success",
+                        "Scam type saved successfully!"
+                    );
+
+                    console.log("Report ID:", data.report_id);
+
+                } else {
+
+                    showToast(
+                        "Error",
+                        data.error || "Something went wrong"
+                    );
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                showToast(
+                    "Error",
+                    "Cannot connect to backend"
+                );
+            }
         }
+        function openEvidenceVault() {
 
+            const reportId = localStorage.getItem("report_id");
 
+            if (!reportId) {
+                showToast(
+                    "Error",
+                    "Please select a scam type first."
+                );
+                return;
+            }
 
+            window.location.href =
+                "/evidence?report_id=" + reportId;
+        }
         /* SCROLL ANIMATION */
 
         const observer =
@@ -2987,7 +3635,19 @@
 
             });
 
+        function showHelpNow() {
+            const modal = document.getElementById("helpModal");
 
+            modal.style.display = "flex";
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeHelpNow() {
+            const modal = document.getElementById("helpModal");
+
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
     </script>
 
 

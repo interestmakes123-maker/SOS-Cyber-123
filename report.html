@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SOS Cyber - Incident Report</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: white;
+        }
+
+        .report-container {
+            max-width: 800px;
+            margin: auto;
+            background: #111827;
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid #263244;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #9ca3af;
+        }
+
+        .report-id {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .section {
+            margin-top: 25px;
+        }
+
+        .section h2 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .label {
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        .value {
+            margin-top: 5px;
+            font-size: 16px;
+        }
+
+        .download-btn {
+            display: block;
+            width: 100%;
+            margin-top: 30px;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            background: #1d4ed8;
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .report-container {
+                border: none;
+                background: white;
+            }
+
+            .download-btn {
+                display: none;
+            }
+
+            .card,
+            .report-id {
+                background: #f3f4f6;
+                color: black;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="report-container">
+
+        <div class="header">
+            <h1>🛡️ SOS CYBER</h1>
+            <p>Cyber Scam Incident Report</p>
+        </div>
+
+        <div class="report-id">
+            <div class="label">REPORT ID</div>
+            <div class="value" id="reportId">Loading...</div>
+        </div>
+
+        <div class="section">
+            <h2>📋 Incident Details</h2>
+
+            <div class="card">
+                <div class="label">Scam Type</div>
+                <div class="value" id="scamType">Loading...</div>
+            </div>
+
+            <div class="card">
+                <div class="label">Description</div>
+                <div class="value" id="description">Loading...</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🤖 AI Analysis</h2>
+
+            <div class="card">
+                <div class="label">Risk Level</div>
+                <div class="value" id="riskLevel">Not available</div>
+            </div>
+
+            <div class="card">
+                <div class="label">Scam Probability</div>
+                <div class="value" id="probability">Not available</div>
+            </div>
+
+            <div class="card">
+                <div class="label">Detected Scam Type</div>
+                <div class="value" id="aiScamType">Not available</div>
+            </div>
+
+            <div class="card">
+                <div class="label">Warning Signs</div>
+                <div class="value" id="warningSigns">Not available</div>
+            </div>
+
+            <div class="card">
+                <div class="label">Recommended Action</div>
+                <div class="value" id="recommendedAction">
+                    Not available
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📎 Evidence</h2>
+
+            <div id="evidenceList">
+                No evidence uploaded.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🕒 Incident Timeline</h2>
+
+            <div id="timelineList">
+                No timeline events.
+            </div>
+        </div>
+
+        <button class="download-btn" onclick="downloadReport()">
+            📄 DOWNLOAD INCIDENT REPORT
+        </button>
+
+    </div>
+
+
+    <script>
+
+        const reportId =
+            new URLSearchParams(window.location.search)
+                .get("report_id");
+
+
+        async function loadReport() {
+
+            if (!reportId) {
+                alert("Report ID is missing.");
+                return;
+            }
+
+            document.getElementById("reportId").textContent =
+                reportId;
+
+            try {
+
+                const response =
+                    await fetch("/api/timeline/" + reportId);
+
+                const data =
+                    await response.json();
+
+                if (!response.ok) {
+                    alert(data.error || "Unable to load report.");
+                    return;
+                }
+
+                if (!data.report) {
+                    alert("Report not found.");
+                    return;
+                }
+
+
+                document.getElementById("scamType").textContent =
+                    data.report.scam_type || "Not available";
+
+                document.getElementById("description").textContent =
+                    data.report.description || "Not available";
+                document.getElementById("riskLevel").textContent =
+                    data.report.ai_risk_level || "Not available";
+
+                document.getElementById("probability").textContent =
+                    data.report.ai_probability || "Not available";
+
+                document.getElementById("aiScamType").textContent =
+                    data.report.ai_scam_type || "Not available";
+
+                document.getElementById("warningSigns").textContent =
+                    data.report.ai_warning_signs || "Not available";
+
+                document.getElementById("recommendedAction").textContent =
+                    data.report.ai_recommended_action || "Not available";
+
+
+                if (data.evidence &&
+                    data.evidence.length > 0) {
+
+                    document.getElementById("evidenceList").innerHTML =
+                        data.evidence.map(item => `
+                            <div class="card">
+                                <div class="label">File</div>
+                                <div class="value">
+                                    ${item.file_name || "Unknown"}
+                                </div>
+                            </div>
+                        `).join("");
+
+                }
+
+
+                if (data.timeline &&
+                    data.timeline.length > 0) {
+
+                    document.getElementById("timelineList").innerHTML =
+                        data.timeline.map(item => `
+                            <div class="card">
+                                <div class="value">
+                                    ${item.event}
+                                </div>
+                                <div class="label">
+                                    ${item.event_time}
+                                </div>
+                            </div>
+                        `).join("");
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert("Cannot connect to backend.");
+
+            }
+        }
+
+
+        function downloadReport() {
+
+            window.print();
+
+        }
+
+
+        loadReport();
+
+    </script>
+
+</body>
+
+</html>
