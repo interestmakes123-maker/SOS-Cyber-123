@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Incident Timeline - ScamShield</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+        }
+
+        .page {
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.10);
+        }
+
+        .back {
+            text-decoration: none;
+            color: #555;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 35px;
+        }
+
+        .timeline {
+            position: relative;
+            margin-left: 20px;
+            padding-left: 35px;
+            border-left: 3px solid #ddd;
+        }
+
+        .event {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .event::before {
+            content: "";
+            position: absolute;
+            left: -45px;
+            top: 3px;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border: 4px solid #333;
+            border-radius: 50%;
+        }
+
+        .event-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .event-time {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .empty {
+            text-align: center;
+            color: #777;
+            padding: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+
+        <div class="container">
+
+            <a href="/" class="back">← Back to ScamShield</a>
+
+            <h1>📋 Incident Timeline</h1>
+
+            <p class="subtitle">
+                Evidence and actions recorded during the scam incident
+            </p>
+
+            <div id="timeline" class="timeline">
+                <div class="empty">
+                    Loading timeline...
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function formatTime(timestamp) {
+
+            if (!timestamp) {
+                return "Time unavailable";
+            }
+
+            const date = new Date(
+                timestamp.replace(" ", "T") + "Z"
+            );
+
+            return date.toLocaleTimeString([], {
+                hour: "numeric",
+                minute: "2-digit",
+                hour12: true
+            });
+        }
+
+
+        async function loadTimeline() {
+
+            const reportId =
+                new URLSearchParams(window.location.search).get("report_id");
+
+            const timeline =
+                document.querySelector("#timeline");
+
+            if (!reportId) {
+                timeline.innerHTML =
+                    "<div class='empty'>No report ID provided.</div>";
+                return;
+            }
+
+            try {
+
+                const response =
+                    await fetch("/api/timeline/" + reportId);
+
+                const data =
+                    await response.json();
+
+                let html = "";
+
+
+                /* REPORT */
+
+                if (data.report) {
+
+                    html += `
+        <div class="event">
+
+            <div class="event-title">
+                🚨 Scam Reported
+            </div>
+
+            <div class="event-time">
+                🔎 Scam Type:
+                ${data.report.scam_type}
+            </div>
+
+            <div class="event-time">
+                📝 Description:
+                ${data.report.description || "No description provided"}
+            </div>
+
+            <div class="event-time">
+                🕒 ${formatTime(data.report.created_at)}
+            </div>
+
+        </div>
+    `;
+                }
+
+
+                /* TIMELINE EVENTS */
+
+                if (data.timeline && data.timeline.length > 0) {
+
+                    data.timeline.forEach(item => {
+
+                        html += `
+            <div class="event">
+
+                <div class="event-title">
+                    📌 ${item.event}
+                </div>
+
+                <div class="event-time">
+                    🕒 ${formatTime(item.event_time)}
+                </div>
+
+            </div>
+        `;
+
+                    });
+                }
+
+
+                /* EVIDENCE DETAILS */
+
+                if (data.evidence && data.evidence.length > 0) {
+
+                    data.evidence.forEach(item => {
+
+                        html += `
+            <div class="event">
+
+                <div class="event-title">
+                    📎 Evidence Details
+                </div>
+
+                <div class="event-time">
+                    📄 File: ${item.file_name}
+                </div>
+
+                <div class="event-time">
+                    📱 Scammer Phone:
+                    ${item.scammer_phone || "Not provided"}
+                </div>
+
+                <div class="event-time">
+                    💳 Transaction ID:
+                    ${item.transaction_id || "Not provided"}
+                </div>
+
+                <div class="event-time">
+                    💰 Amount Lost:
+                    ${item.amount_lost ? "₹" + item.amount_lost : "Not provided"}
+                </div>
+
+                <div class="event-time">
+                    📝 Details:
+                    ${item.incident_details || "No details provided"}
+                </div>
+
+                <div class="event-time">
+                    🕒 Uploaded:
+                    ${formatTime(item.uploaded_at)}
+                </div>
+
+            </div>
+        `;
+
+                    });
+                }
+
+                if (html === "") {
+
+                    html = `
+                    <div class="empty">
+                        No information found for this report.
+                    </div>
+                `;
+
+                }
+
+
+                timeline.innerHTML = html;
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                timeline.innerHTML = `
+                <div class="empty">
+                    Unable to load timeline.
+                </div>
+            `;
+
+            }
+        }
+
+
+        loadTimeline();
+
+    </script>
+    <button onclick="openFinalReport()">
+        📄 Download Incident Report
+    </button>
+
+    <script>
+        function openFinalReport() {
+            const reportId =
+                new URLSearchParams(window.location.search)
+                    .get("report_id");
+
+            if (!reportId) {
+                alert("Report ID is missing.");
+                return;
+            }
+
+            window.location.href =
+                "/report?report_id=" + reportId;
+        }
+    </script>
+</body>
+
+</html>
